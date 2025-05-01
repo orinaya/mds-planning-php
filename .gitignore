@@ -1,0 +1,16 @@
+# Node_modules
+/node_modules/
+
+# Database files
+data.sql
+
+# Config files
+config/config.ini
+!/config/*.example
+
+# Vendor
+/vendor/
+
+.env
+
+.htaccess

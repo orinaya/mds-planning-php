@@ -1,0 +1,9 @@
+{
+  "name": "app/mds-planning-php",
+  "autoload": {
+    "psr-4": {
+      "App\\": "src/"
+    }
+  },
+  "require": {}
+}
