@@ -10,7 +10,3 @@ config/config.ini
 
 # Vendor
 /vendor/
-
-.env
-
-.htaccess

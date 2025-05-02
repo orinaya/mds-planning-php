@@ -1,22 +1,46 @@
 <?php
+
 namespace App\Controllers;
+
 class MainController
 {
   protected $view;
-  protected $data;
-  protected $classes;
+  protected $data = [];
+  protected $classes = [];
 
-  public function render()
+  public function render(): void
   {
-    $this->view = $this->getView();
+    if (!is_array($this->data)) {
+      $this->data = [];
+    }
+    if (!is_array($this->classes)) {
+      $this->classes = [];
+    }
 
-    $base_uri = explode('/', $_SERVER['REQUEST_URI']);
-    $data = $this->data;
-    $classes = $this->classes;
-    // Rendu de la vue avec les données récupérées
-    require __DIR__ . '/../Views/layouts/sideBar.php';
-    require __DIR__ . '/../Views/partials/' . $this->view . '.php';
-    require __DIR__ . '/../Views/layouts/footer.php';
+    $viewPath = __DIR__ . '/../Views/' . $this->view . '.php';
+    $sidebarPath = __DIR__ . '/../Views/partials/sidebar.php';
+    $layoutPath = __DIR__ . '/../Views/layouts/base.php';
+
+    if (!file_exists($viewPath)) {
+      throw new \Exception("Vue introuvable : {$this->view}");
+    }
+
+    ob_start();
+    include $sidebarPath;
+    $sidebarContent = ob_get_clean();
+
+    ob_start();
+    include $viewPath;
+    $viewContent = ob_get_clean();
+
+    $content = function () use ($viewContent) {
+      echo $viewContent;
+    };
+
+    extract($this->data);
+    extract($this->classes);
+
+    include $layoutPath;
   }
 
   public function getView()
@@ -24,10 +48,21 @@ class MainController
     return $this->view;
   }
 
-  public function setView($view): self
+  public function setView(string $view): self
   {
     $this->view = $view;
     return $this;
   }
 
+  public function setData(array $data = []): self
+  {
+    $this->data = $data;
+    return $this;
+  }
+
+  public function setClasses(array $classes = []): self
+  {
+    $this->classes = $classes;
+    return $this;
+  }
 }
