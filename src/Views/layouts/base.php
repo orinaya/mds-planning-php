@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title><?= $data['title'] ?? 'Ma page' ?></title>
+  <title><?= $title ?? 'Ma page' ?></title>
   <link rel="stylesheet" href="<?= BASE_URL ?>/assets/css/style.css">
   <script src="<?= BASE_URL ?>/assets/js/script.js" defer></script>
 </head>
@@ -13,11 +13,11 @@
 
   <div class="layout-container">
 
-    <aside class="sidebar">
+    <aside id="sidebar" class="sidebar-container">
       <?= $sidebarContent ?>
     </aside>
 
-    <div class="main-content">
+    <div id="main-content" class="main-content">
       <?php
       if (isset($content) && is_callable($content)) {
         $content();

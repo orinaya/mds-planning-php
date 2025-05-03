@@ -1,0 +1,71 @@
+@use 'colors' as c;
+
+// LAYOUT
+$sidebar-width: 280px;
+$height-view: 100vh;
+$height-full: 100%;
+
+$width-full: 100%;
+
+// COLORS BACKGROUND
+$color-title: hsl(217, 41%, 30%); 
+
+$primary-color: c.color(primary, 500);
+$secondary-color: c.color(secondary, 500);
+$tertiary-color: c.color(tertiary, 500);
+$bg-color: #ffffff;
+$bg-light: #f5f5f5;
+$bg-hover: #f0f8f5;  
+
+
+
+$navbar-bg: white;
+$sidebar-color: c.color(primary, 950);
+
+// FOREGROUND COLORS
+$text-color: #333;
+
+
+// HOVER, ACTIVE, FOCUS COLORS
+$hover-color: hsl(217, 41%, 80%);
+$active-color: $secondary-color;
+
+// BORDERS 
+$border-color: rgba(0, 0, 0, 0.1);
+
+// BUTTONS
+
+// FONT FAMILY
+$font-family: 'Poppins', sans-serif;
+
+// FONTS SIZE
+$font-h1: 1.75rem;
+$font-h2: 1.5rem;
+$font-h3: 1.25rem;
+$font-normal: 1rem;
+$font-note: 0.875rem;
+
+// FONT WEIGHT
+$weight-light: 400;
+$weight-normal: 500;
+$weight-semibold: 600;
+$weight-bold: 700;
+
+// RADIUS
+$border-radius-sm: 8px;
+$border-radius-md: 8px;
+// SHADOWS
+
+// TRANSITION
+$transition-time: 0.3s;
+
+// SPACING
+// PADDING
+$sidebar-padding: 1rem;
+$padding-none: 0;
+
+// MARGIN
+$margin-none: 0;
+
+// IMAGES, ICONS, SVGs
+$icon-size: 1.2rem;

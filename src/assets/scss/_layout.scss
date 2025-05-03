@@ -1,0 +1,51 @@
+@use 'theme/variables' as *;
+@use 'theme/colors' as *;
+
+h1, h2, h3, h4, h5, h6 {
+  margin: $margin-none;
+  padding: $padding-none;
+  color: color(primary, 400);
+}
+
+h1{
+  font-size: $font-h1;
+  font-weight: $weight-semibold;
+  margin-block: 16px;
+}
+
+h2{
+  font-size: $font-h2;
+  font-weight: $weight-semibold;
+}
+
+h3{
+  font-size: $font-h3;
+  font-weight: $weight-semibold;
+}
+
+.layout-container {
+  display: flex;
+  flex-direction: row;
+  height: $height-view;
+  
+  .main-content {
+    flex-grow: 1;
+    display: flex;
+    padding-left: 310px;
+    transition: padding-left 0.3s ease;
+
+    &.sidebar-collapsed{
+      padding-left: 100px;
+    }
+  }
+
+}
+
+
+ul, li,a, p, span{
+  margin: $margin-none;
+}
+
+a{
+  text-decoration: none;
+}

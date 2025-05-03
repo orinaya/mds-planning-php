@@ -25,6 +25,9 @@ class MainController
       throw new \Exception("Vue introuvable : {$this->view}");
     }
 
+    extract($this->data);
+    extract($this->classes);
+
     ob_start();
     include $sidebarPath;
     $sidebarContent = ob_get_clean();
@@ -37,8 +40,6 @@ class MainController
       echo $viewContent;
     };
 
-    extract($this->data);
-    extract($this->classes);
 
     include $layoutPath;
   }

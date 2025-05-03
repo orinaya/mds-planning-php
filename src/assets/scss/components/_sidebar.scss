@@ -1,0 +1,249 @@
+@use '../theme/variables' as *;
+@use '../mixins' as *;
+@use '../theme/colors' as *;
+
+.toggle-sidebar-btn {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  font-size: 24px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  z-index: 1000;
+
+  span{
+    color: color(primary, 600)
+  }
+}
+
+.sidebar-container{
+  width: $sidebar-width;
+  background-color: $sidebar-color;
+  display: flex;
+  flex-direction: column;
+  margin: 12px;
+  border-radius: 16px;
+  transition: width 0.3s ease;
+  overflow: hidden;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 97%;
+  z-index: 999;
+
+
+  &.collapsed {
+    width: 70px;
+
+    .label,
+    .username,
+    .role,
+    .submenu {
+      display: none;
+    }
+
+    .accordion-btn,
+    a {
+      justify-content: center;
+    }
+
+    .accordion-btn div {
+      justify-content: center;
+    }
+
+    .sidebar-footer {
+      justify-content: center;
+    }
+
+    .profile {
+      padding: 1rem 0.5rem;
+    }
+
+    .profile-pic {
+      margin-bottom: 0;
+    }
+  }
+
+  &_content {
+    flex: 1;
+    overflow-y: auto;
+    padding: $sidebar-padding;
+    
+    .profile {
+      @include flex(column, center, center);
+      padding: 1.5rem 1rem;
+      border-bottom: 1px solid $border-color;
+      margin-bottom: 1rem;
+      margin-top: 2rem;
+
+      &-pic {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        background-color: color(tertiary, 800);
+        color: color(tertiary, 400);
+        @include flex(row, center, center);
+        font-size: 1.5rem;
+        font-weight: $weight-semibold;
+        margin-bottom: 0.75rem;
+      }
+
+      .username {
+        font-size: 1rem;
+        margin: 0.5rem 0;
+        text-align: center;
+        font-weight: 500;
+        color: color(primary, 300);
+        @include flex(row, center, center);
+
+        .icon-verified-check {
+          color: color(primary, 300);
+          margin-left: 0.25rem;
+          font-size:$icon-size;
+        }
+      }
+
+      .role {
+        font-size: 0.85rem;
+        font-weight: 400;
+        padding: 0.25rem 0.75rem;
+        background-color: color(tertiary, 900);
+        color: color(tertiary, 400);
+        border-radius: 1rem;
+      }
+    }
+
+    .menu {
+      ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    
+        .submenu {
+          padding-left: 1.5rem;
+    
+          &.hidden {
+            display: none;
+          }
+    
+          a {
+            padding: 0.6rem 0.8rem;
+            font-size: 0.95rem;
+          }
+        }
+    
+        a {
+          display: block;
+          padding: 0.8rem 1rem;
+          color: $text-color;
+          text-decoration: none;
+          border-radius: $border-radius-sm;
+          @include transition;
+    
+          &:hover {
+            background-color: color(primary, 900);
+            color: $primary-color;
+          }
+    
+          &.active {
+            background-color: color(primary, 900);
+            color: $primary-color;
+            font-weight: 500;
+          }
+        }
+      }
+    }
+  }
+
+  &_footer {
+    padding-block: 10px;
+    padding-inline: 18px;
+    @include flex(column, space-between);
+    gap: 8px;
+
+    a {
+      @include flex(row, center, center);
+      padding: 0.5rem;
+      color: $text-color;
+      text-decoration: none;
+      border-radius:$border-radius-md;
+      width: $width-full;
+
+  
+      span{
+        margin-right: 0.5rem;
+        font-size: 1.2rem;
+      }
+
+      &:hover {
+        color: $primary-color;
+        background-color: $bg-hover;
+      }
+    }
+  
+    .logout-btn {
+      background-color: color(danger, 900);
+      color: color(danger, 500);
+
+      &:hover {
+        background-color: color(danger, 800);
+        color: color(danger, 400);
+      }
+    }
+  }
+}
+
+
+.accordion-btn {
+  width: 100%;
+  background: none;
+  border: none;
+  text-align: left;
+  padding: 0.8rem 1rem;
+  cursor: pointer;
+  border-radius: $border-radius-sm;
+  @include flex(row, space-between);
+  color: $text-color;
+  font-size: 1rem;
+  @include transition;
+
+  .label{
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    font-family: $font-family;
+
+  }
+  
+  &:hover {
+    background-color: color(primary, 900);
+    color: $primary-color;
+  }
+
+  &.active {
+    background-color: color(primary, 900);
+    color: $primary-color;
+
+    .icon-alt-arrow-down {
+      transform: rotate(180deg);
+    }
+  }
+
+  .icon-alt-arrow-down {
+    @include transition(transform);
+  }
+
+  div {
+    @include flex(row);
+  }
+
+  span[class^="icon-"] {
+    margin-right: 0.5rem;
+    font-size: $icon-size;
+  }
+}
+
+
+
+
