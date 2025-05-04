@@ -10,7 +10,7 @@
   background: none;
   border: none;
   cursor: pointer;
-  z-index: 1000;
+  z-index: 5;
 
   span{
     color: color(primary, 600)
@@ -30,7 +30,7 @@
   top: 0;
   left: 0;
   height: 97%;
-  z-index: 999;
+  z-index: 4;
 
 
   &.collapsed {

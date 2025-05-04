@@ -3,7 +3,8 @@
   <div class="header">
     <div class="actions">
       <input type="text" placeholder="Recherche" id="searchInput">
-      <button class="btn-modifier">Modifier l'année <span class="icon-pencil"></span></button>
+      <?php ButtonParticle('Ajouter un formateur', 'primary', 'add-circle', '', 'submit'); ?>
+      <?php ButtonParticle('Modifier les formateurs', 'tertiary', 'folder', '', 'submit'); ?>
     </div>
   </div>
   <div class="table-wrapper">

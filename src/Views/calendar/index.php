@@ -97,7 +97,6 @@ include_once('ButtonParticle.php');
     <div class="modules-container">
       <div class="modules-list">
         <h2>Liste des modules</h2>
-        <button class="btn btn-primary" id="addModuleBtn">Ajouter un module</button>
         <?php ButtonParticle('Ajouter un module', 'primary', 'logout', 'addModuleBtn'); ?>
         <div class="search-bar">
           <input type="text" placeholder="Rechercher un module..." id="searchInput">
@@ -118,12 +117,7 @@ include_once('ButtonParticle.php');
             </li>
           <?php endforeach; ?>
         </ul>
-
-
-
-
       </div>
-
     </div>
 
     <div id="moduleModal" class="modal">
@@ -133,6 +127,17 @@ include_once('ButtonParticle.php');
           <button class="close-btn">&times;</button>
         </div>
         <form id="moduleForm">
+
+          <div class="form-group">
+            <label for="classSelect">Classe(s)</label>
+            <div id="classSelector" class="multi-select-container">
+              <div id="multiSelect" class="multi-select"></div>
+              <input type="text" id="classInput" class="form-control" placeholder="Rechercher une classe..." autocomplete="off" />
+              <ul id="suggestions" class="suggestions-list"></ul>
+              <input type="hidden" name="classes[]" id="selectedClasses" />
+            </div>
+          </div>
+
           <div class="form-group">
             <label for="moduleName">Nom du module</label>
             <input type="text" id="moduleName" class="form-control" required>
@@ -147,28 +152,28 @@ include_once('ButtonParticle.php');
           </div>
           <div class="form-group">
             <label for="moduleColor">Couleur</label>
-            <select id="moduleColor" class="form-control">
-              <option value="primary">Bleu</option>
-              <option value="success">Vert</option>
-              <option value="warning">Orange</option>
-              <option value="danger">Rouge</option>
-              <option value="info">Violet clair</option>
-              <option value="purple">Violet</option>
-              <option value="teal">Turquoise</option>
-            </select>
+            <input
+              type="color"
+              id="moduleColor"
+              value="#007bff">
           </div>
-          <div class="form-group">
+          <div class=" form-group">
             <label>
               <input type="checkbox" id="moduleOption">
               Module optionnel
             </label>
           </div>
           <div class="form-actions">
-            <button type="button" class="btn btn-danger" id="cancelBtn">Annuler</button>
-            <button type="submit" class="btn btn-success">Enregistrer</button>
+            <?php ButtonParticle('Annuler', 'danger', 'trash-bin', 'cancelBtn'); ?>
+            <?php ButtonParticle('Enregistrer', 'success', 'check', '', 'submit'); ?>
           </div>
         </form>
       </div>
     </div>
   </div>
+  <script>
+    const classes = <?php echo json_encode(array_column($classes, 'nom')); ?>;
+
+    console.log(classes);
+  </script>
 </section>

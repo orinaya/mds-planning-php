@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Models\CalendarModel;
+use App\Models\ClassModel;
 use App\Models\ModuleModel;
 
 class CalendarController extends MainController
@@ -11,6 +12,7 @@ class CalendarController extends MainController
   {
     $calendars = CalendarModel::getStudentsCalendar();
     $modules = ModuleModel::getAllModules();
+    $classes = ClassModel::getAllClasses();
 
     $this
       ->setView('calendar/index')
@@ -18,6 +20,7 @@ class CalendarController extends MainController
         'title' => 'Planning des Étudiants 2024-2025',
         'calendars' => $calendars,
         'modules' => $modules,
+        'classes' => $classes
       ])
       ->render();
   }
