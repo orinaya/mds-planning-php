@@ -10,24 +10,24 @@ class MainController
 
   public function render(): void
   {
+    // Vérification des données
     if (!is_array($this->data)) {
       $this->data = [];
     }
-    if (!is_array($this->classes)) {
-      $this->classes = [];
-    }
 
+    // Création de la vue, la sidebar et le layout en fonction de la vue actuelle
     $viewPath = __DIR__ . '/../Views/' . $this->view . '.php';
     $sidebarPath = __DIR__ . '/../Views/partials/sidebar.php';
     $layoutPath = __DIR__ . '/../Views/layouts/base.php';
 
+    // Vérification de l'existence des fichiers de vue
     if (!file_exists($viewPath)) {
       throw new \Exception("Vue introuvable : {$this->view}");
     }
 
     extract($this->data);
-    extract($this->classes);
 
+    // Vérification de l'existence des fichiers de sidebar et de layout
     ob_start();
     include $sidebarPath;
     $sidebarContent = ob_get_clean();
@@ -39,7 +39,6 @@ class MainController
     $content = function () use ($viewContent) {
       echo $viewContent;
     };
-
 
     include $layoutPath;
   }
@@ -58,12 +57,6 @@ class MainController
   public function setData(array $data = []): self
   {
     $this->data = $data;
-    return $this;
-  }
-
-  public function setClasses(array $classes = []): self
-  {
-    $this->classes = $classes;
     return $this;
   }
 }

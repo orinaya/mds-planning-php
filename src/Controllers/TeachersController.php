@@ -9,6 +9,7 @@ class TeachersController extends MainController
   public function execute()
   {
     $teachers = TeacherModel::getAllTeachers();
+
     $this
       ->setView('teachers/index')
       ->setData([

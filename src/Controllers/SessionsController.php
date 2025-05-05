@@ -11,6 +11,7 @@ class SessionsController extends MainController
     $sessions = SessionModel::getAllSessions();
     $activeSessions = SessionModel::getActiveSession();
     $activeSessionWithModulesByClasses = SessionModel::getActiveSessionWithModulesByClasses();
+
     $this
       ->setView('sessions/index')
       ->setData([
