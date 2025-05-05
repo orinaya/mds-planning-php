@@ -1,138 +1,46 @@
-@use 'sass:map';
-@use 'sass:color';
+@use "sass:map";
+@use "sass:color";
 
 $tones: (
-    0: 98,
-    50: 95,
-    100: 90,
-    200: 80,
-    300: 70,
-    400: 60,
-    600: 40,
-    700: 30,
-    800: 20,
-    900: 10,
-    950: 5
+  0: 98,
+  50: 95,
+  100: 90,
+  200: 80,
+  300: 70,
+  400: 60,
+  600: 40,
+  700: 30,
+  800: 20,
+  900: 10,
+  950: 5,
 );
 
 $palette: (
-    primary: hsl(231, 31%, 50%),
-    secondary: hsl(230, 84%, 80%),
-    tertiary: hsl(334, 60%, 60%),
-    neutral: hsl(202deg 15% 50%),
-    success: hsl(129deg 64% 39%),
-    warning: hsl(39deg 71% 51%),
-    danger: hsl(3deg 67% 50%),
+  primary: hsl(231, 31%, 50%),
+  secondary: hsl(230, 84%, 50%),
+  tertiary: hsl(334, 60%, 50%),
+  neutral: hsl(202deg 15% 50%),
+  success: hsl(129deg 64% 39%),
+  warning: hsl(39deg 71% 51%),
+  danger: hsl(3deg 67% 50%),
 );
 
-$colors-name: 'primary', 'secondary', 'tertiary', 'neutral', 'sucess', 'warning', 'danger';
+$colors-name: "primary", "secondary", "tertiary", "neutral", "sucess", "warning", "danger";
 
+@function colorTheme($color: "primary", $tone: 500, $mode: "light") {
+  $hsl: map.get($palette, $color);
 
-@function color($color: 'primary', $tone: 500, $mode: 'light') {
-    $hsl: map.get($palette, $color);
-
-    @if $tone == 500 {
-        @return hsl(
-        color.channel($hsl, "hue", $space: hsl),
-        color.channel($hsl, "saturation", $space: hsl),
-        color.channel($hsl, "lightness", $space: hsl)
-        );
-    } @else {
-        @return hsl(
-        color.channel($hsl, "hue", $space: hsl),
-        color.channel($hsl, "saturation", $space: hsl),
-        calc($tone / 10) * 1%
-        );
-    }
-}
-
-.button {
-    padding: 10px 16px;
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    font-size: 1rem; 
-    font-weight: normal;
-    border: none;
-
-  &.default {
-      background-color: color(primary, 900);
-      color: color(primary, 400);
-
-      &:hover {
-          background-color: color(primary, 800);
-          color: color(primary, 300);
-      }
-  }
-
-  &.success {
-    background-color: color(success, 900);
-    color: color(success, 500);
-
-    &:hover {
-      background-color: color(success, 800);
-      color: color(success, 400);
-    }
-  }
-
-  &.danger {
-    background-color: color(danger, 900);
-    color: color(danger, 500);
-
-    &:hover {
-      background-color: color(danger, 800);
-      color: color(danger, 400);
-    }
-  }
-
-  &.warning {
-    background-color: color(warning, 900);
-    color: color(warning, 500);
-
-    &:hover {
-      background-color: color(warning, 800);
-      color: color(warning, 400);
-    }
-  }
-  
-  &.primary {
-      background-color: color(primary, 900);
-      color: color(primary, 400);
-
-      &:hover {
-          background-color: color(primary, 800);
-          color: color(primary, 300);
-      }
-  }
-  
-  &.secondary {
-      background-color: color(secondary, 900);
-      color: color(secondary, 400);
-
-      &:hover {
-          background-color: color(secondary, 800);
-          color: color(secondary, 300);
-      }
-  }
-  
-  &.tertiary {
-      background-color: color(tertiary, 900);
-      color: color(tertiary, 400);
-
-      &:hover  {
-          background-color: color(tertiary, 800);
-          color: color(tertiary, 300);
-      }
+  @if $tone == 500 {
+    @return hsl(
+      color.channel($hsl, "hue", $space: hsl),
+      color.channel($hsl, "saturation", $space: hsl),
+      color.channel($hsl, "lightness", $space: hsl)
+    );
+  } @else {
+    @return hsl(
+      color.channel($hsl, "hue", $space: hsl),
+      color.channel($hsl, "saturation", $space: hsl),
+      calc($tone / 10) * 1%
+    );
   }
 }
-  
-.icon {
-  width: 16px;
-  height: 16px;
-  display: inline-block;
-}
-  

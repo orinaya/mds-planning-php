@@ -1,51 +1,67 @@
-@use 'theme/variables' as *;
-@use 'theme/colors' as *;
+@use "theme/variables" as *;
+@use "theme/colors" as *;
+@use "mixins" as *;
 
-h1, h2, h3, h4, h5, h6 {
+body {
   margin: $margin-none;
   padding: $padding-none;
-  color: color(primary, 400);
-}
-
-h1{
-  font-size: $font-h1;
-  font-weight: $weight-semibold;
-  margin-block: 16px;
-}
-
-h2{
-  font-size: $font-h2;
-  font-weight: $weight-semibold;
-}
-
-h3{
-  font-size: $font-h3;
-  font-weight: $weight-semibold;
+  font-family: $font-family;
 }
 
 .layout-container {
-  display: flex;
-  flex-direction: row;
+  @include flex(row, center, flex-start);
   height: $height-view;
-  
+
   .main-content {
     flex-grow: 1;
-    display: flex;
-    padding-left: 310px;
-    transition: padding-left 0.3s ease;
+    @include flex(row, center, flex-start);
+    padding-left: $main-content-margin;
+    @include transition(all);
 
-    &.sidebar-collapsed{
-      padding-left: 100px;
+    &.sidebar-collapsed {
+      padding-left: $sidebar-collapsed;
     }
   }
-
 }
 
-
-ul, li,a, p, span{
+ul,
+li,
+a,
+p,
+span {
   margin: $margin-none;
 }
 
-a{
+a {
   text-decoration: none;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: $margin-none;
+  padding: $padding-none;
+  color: colorTheme(primary, 400);
+}
+
+h1 {
+  font-size: $font-h1;
+  margin-block: $margin-md;
+}
+
+h2 {
+  font-size: $font-h2;
+}
+
+h3 {
+  font-size: $font-h3;
+}
+
+h1,
+h2,
+h3 {
+  font-weight: $weight-semibold;
 }

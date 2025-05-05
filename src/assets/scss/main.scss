@@ -1,12 +1,12 @@
 // LAYOUT
 @use "layout" as *;
 @use "mixins" as *;
-// @use 'functions' as *;
 
 // THEME
 @use "theme/colors" as *;
 @use "theme/icons" as *;
 @use "theme/variables" as *;
+@use "theme/fonts" as *;
 
 // VIEWS
 @use "views/calendar" as *;
@@ -16,30 +16,4 @@
 
 // COMPONENTS
 @use "components/sidebar" as *;
-
-@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
-body {
-  font-family: "Poppins", sans-serif;
-  line-height: 1.5;
-  background-color: hsl(0, 0%, 100%);
-  margin: 0;
-}
-
-@font-face {
-  font-family: "icomoon";
-  src: url("../fonts/icomoon.eot");
-  src: url("../fonts/icomoon.eot") format("embedded-opentype"), url("../fonts/icomoon.ttf") format("truetype"),
-    url("../fonts/icomoon.woff") format("woff"), url("../fonts/icomoon.svg") format("svg");
-  font-weight: normal;
-  font-style: normal;
-  font-display: block;
-}
-
-@function color($color, $tone: 500) {
-  $hsl: map.get($palette, $color);
-  @return hsl(
-    color.channel($hsl, "hue", $space: hsl),
-    color.channel($hsl, "saturation", $space: hsl),
-    calc($tone / 10) * 1%
-  );
-}
+@use "components/button" as *;

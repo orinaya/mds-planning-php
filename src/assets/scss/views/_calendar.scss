@@ -46,6 +46,7 @@
             text-align: center;
             margin-inline: 4px;
             border-radius: 4px;
+            font-size: 14px;
           }
     
           .day-content{
@@ -69,12 +70,13 @@
             }
     
             .dropped-module {
-              background-color: color(tertiary, 900);
+              background-color: colorTheme(tertiary, 900);
               padding: 10px;
               margin: 5px 0;
               cursor: move;
-              border: 1px solid color(tertiary, 800);
+              border: 1px solid colorTheme(tertiary, 800);
               border-radius: $border-radius-sm;
+              font-size: 14px;
             }
           }
         }

@@ -1,4 +1,5 @@
-@use 'theme/variables' as *;
+@use "theme/variables" as *;
+@use "theme/colors" as *;
 
 @mixin flex($direction: row, $justify: flex-start, $align: center) {
   display: flex;
@@ -9,4 +10,35 @@
 
 @mixin transition($property: all) {
   transition: $property $transition-time ease;
+}
+
+@mixin text($size: 1rem, $weight: normal, $color: $text-color) {
+  font-size: $size;
+  font-weight: $weight;
+  color: $color;
+}
+
+@mixin borderRadius($radius: $border-radius-sm) {
+  border-radius: $radius;
+}
+
+@mixin border($color: $border-color, $width: 1px, $style: solid) {
+  border: $width $style $color;
+}
+
+@mixin padding($block: $padding-none, $inline: $padding-none) {
+  padding: $block $inline;
+}
+
+@mixin absolute($top: 0, $right: 0, $bottom: 0, $left: 0) {
+  position: absolute;
+  top: $top;
+  right: $right;
+  bottom: $bottom;
+  left: $left;
+}
+
+@mixin color($bgColor: primary, $bgLightness: 950, $fgColor: primary, $fgLightness: 200) {
+  background-color: colorTheme($bgColor, $bgLightness);
+  color: colorTheme($fgColor, $fgLightness);
 }

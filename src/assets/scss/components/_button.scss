@@ -1,0 +1,77 @@
+@use '../theme/colors' as *;
+@use '../mixins' as *;
+@use '../theme/variables' as *;
+
+
+.button {
+  @include flex(row, center, center);
+  @include text(1rem, normal, $text-color);
+  @include transition(all);
+  @include borderRadius($border-radius-sm);
+  @include padding($padding-sm, $padding-md);
+  gap: $gap-sm;
+  cursor: pointer;
+  border: none;
+
+  &.default {
+    @include color(primary, 900, primary, 400);
+
+    &:hover {
+      @include color(primary, 800, primary, 300);
+    }
+  }
+
+  &.success {
+    @include color(success, 900, success, 500);
+
+    &:hover {
+      @include color(success, 800, success, 400);
+    }
+  }
+
+  &.danger {
+    @include color(danger, 900, danger, 500);
+
+    &:hover {
+      @include color(danger, 800, danger, 400);
+    }
+  }
+
+  &.warning {
+    @include color(warning, 900, warning, 500);
+
+    &:hover {
+      @include color(warning, 800, warning, 400);
+    }
+  }
+
+  &.primary {
+    @include color(primary, 900, primary, 400);
+
+    &:hover {
+      @include color(primary, 800, primary, 300);
+    }
+  }
+
+  &.secondary {
+    @include color(secondary, 900, secondary, 400);
+
+    &:hover {
+      @include color(secondary, 800, secondary, 300);
+    }
+  }
+
+  &.tertiary {
+    @include color(tertiary, 900, tertiary, 400);
+
+    &:hover  {
+      @include color(tertiary, 800, tertiary, 300);
+    }
+  }
+}
+
+.icon {
+  width: 16px;
+  height: 16px;
+  display: inline-block;
+}
