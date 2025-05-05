@@ -27,7 +27,7 @@ include_once('ButtonParticle.php');
         <button class="accordion-btn active" onclick="toggleAccordion('planning-menu')">
           <div class="label">
             <span class="icon-calendar"></span>
-            Planning
+            Planification
           </div>
           <span class="icon-alt-arrow-down"></span>
         </button>

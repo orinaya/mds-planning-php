@@ -9,24 +9,19 @@
   <script src="<?= BASE_URL ?>/assets/js/script.js" defer></script>
 </head>
 
-<body>
+<body class="layout-container">
+  <aside id="sidebar" class="sidebar-container">
+    <?= $sidebarContent ?>
+  </aside>
 
-  <div class="layout-container">
-
-    <aside id="sidebar" class="sidebar-container">
-      <?= $sidebarContent ?>
-    </aside>
-
-    <div id="main-content" class="main-content">
-      <?php
-      if (isset($content) && is_callable($content)) {
-        $content();
-      } else {
-        echo "Aucun contenu disponible";
-      }
-      ?>
-    </div>
-
+  <div id="main-content" class="main-content">
+    <?php
+    if (isset($content) && is_callable($content)) {
+      $content();
+    } else {
+      echo "Aucun contenu disponible";
+    }
+    ?>
   </div>
 </body>
 

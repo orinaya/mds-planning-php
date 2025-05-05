@@ -1,12 +1,20 @@
+<?php include_once(__DIR__ . '/../partials/HeaderComponent.php'); ?>
+
 <section class="content">
-  <h1><?= $title ?></h1>
-  <div class="header">
-    <div class="actions">
-      <input type="text" placeholder="Recherche" id="searchInput">
-      <?php ButtonParticle('Ajouter une année', 'primary', 'add-circle', '', 'submit'); ?>
-      <?php ButtonParticle('Modifier les années', 'tertiary', 'folder', '', 'submit'); ?>
-    </div>
-  </div>
+  <?= HeaderComponent(
+    $title,
+    true,
+    [
+      ['label' => 'Ajouter une année', 'type' => 'primary', 'icon' => 'add-circle', 'action' => 'addSessionModal', 'method' => 'submit'],
+      ['label' => 'Modifier les années', 'type' => 'tertiary', 'icon' => 'folder', 'action' => '', 'method' => 'submit'],
+    ],
+    [
+      ['label' => 'Accueil', 'url' => BASE_URL . '/'],
+      ['label' => 'Année scolaire', 'url' => BASE_URL . '/annees'],
+      ['label' => 'Liste des années']
+    ]
+  ) ?>
+
   <div class="table-wrapper">
     <table>
       <thead>

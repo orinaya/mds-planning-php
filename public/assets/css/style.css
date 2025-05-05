@@ -51,7 +51,7 @@ h6 {
 
 h1 {
   font-size: 1.75rem;
-  margin-block: 1rem;
+  margin-top: 1rem;
 }
 
 h2 {
@@ -1179,6 +1179,23 @@ body {
   width: 16px;
   height: 16px;
   display: inline-block;
+}
+
+.breadcrumb {
+  font-size: 14px;
+  margin-bottom: 2rem;
+}
+
+.breadcrumb a {
+  color: hsl(231, 31%, 50%);
+  text-decoration: none;
+}
+.breadcrumb a:hover {
+  color: hsl(334, 60%, 50%);
+}
+
+.breadcrumb span {
+  color: #555;
 }
 
 /*# sourceMappingURL=style.css.map */

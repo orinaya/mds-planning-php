@@ -1,12 +1,20 @@
+<?php include_once(__DIR__ . '/../partials/HeaderComponent.php'); ?>
+
 <section class="content">
-  <h1><?= $title ?></h1>
-  <div class="header">
-    <div class="actions">
-      <input type="text" placeholder="Recherche" id="searchInput">
-      <?php ButtonParticle('Ajouter un formateur', 'primary', 'add-circle', '', 'submit'); ?>
-      <?php ButtonParticle('Modifier les formateurs', 'tertiary', 'folder', '', 'submit'); ?>
-    </div>
-  </div>
+  <?= HeaderComponent(
+    $title,
+    true,
+    [
+      ['label' => 'Ajouter un formateur', 'type' => 'primary', 'icon' => 'add-circle', 'action' => 'addTeacherModal', 'method' => 'submit'],
+      ['label' => 'Modifier les formateurs', 'type' => 'tertiary', 'icon' => 'folder', 'action' => '', 'method' => 'submit'],
+    ],
+    [
+      ['label' => 'Accueil', 'url' => BASE_URL . '/'],
+      ['label' => 'Formateurs', 'url' => BASE_URL . '/formateurs'],
+      ['label' => 'Liste des formateurs']
+    ]
+  ) ?>
+
   <div class="table-wrapper">
     <table>
       <thead>
@@ -16,6 +24,7 @@
           <th>Prénom</th>
           <th>Email</th>
           <th>Description</th>
+          <th>Créé le</th>
         </tr>
       </thead>
       <tbody id="teacherTableBody">
@@ -26,6 +35,7 @@
             <td><?= htmlspecialchars($teacher['firstname']) ?></td>
             <td><?= htmlspecialchars($teacher['email']) ?></td>
             <td><?= htmlspecialchars($teacher['description']) ?></td>
+            <td><?= htmlspecialchars($teacher['created_at']) ?></td>
           </tr>
         <?php endforeach; ?>
       </tbody>

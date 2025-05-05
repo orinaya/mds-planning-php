@@ -1,0 +1,20 @@
+@use "../_mixins";
+@use "../theme/colors" as *;
+
+.breadcrumb {
+  font-size: 14px;
+  margin-bottom: 2rem;
+}
+
+.breadcrumb a {
+  color: colorTheme("primary", 500);
+  text-decoration: none;
+
+  &:hover {
+    color: colorTheme("tertiary", 500);
+  }
+}
+
+.breadcrumb span {
+  color: #555;
+}
