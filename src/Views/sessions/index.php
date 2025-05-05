@@ -1,4 +1,5 @@
 <?php include_once(__DIR__ . '/../partials/HeaderComponent.php'); ?>
+<?php include_once(__DIR__ . '/../partials/TableComponent.php'); ?>
 
 <section class="content">
   <?= HeaderComponent(
@@ -15,35 +16,6 @@
     ]
   ) ?>
 
-  <div class="table-wrapper">
-    <table>
-      <thead>
-        <tr>
-          <th><input type="checkbox"></th>
-          <th>Année</th>
-          <th>Statut</th>
-          <th>Créé le</th>
-        </tr>
-      </thead>
-      <tbody id="teacherTableBody">
-        <?php foreach ($sessions as $session): ?>
-          <tr>
-            <?php
-            $active = match ($session['is_active']) {
-              0 => 'Inactive',
-              1 => 'En cours',
-              default => 'Statut inconnu',
-            };
-            ?>
-            <td><input type="checkbox"></td>
-            <td><?= htmlspecialchars($session['name']) ?></td>
-            <td><?= htmlspecialchars($active) ?></td>
-            <td><?= htmlspecialchars($session['created_at']) ?></td>
-          </tr>
-        <?php endforeach; ?>
-      </tbody>
-    </table>
-  </div>
 
   <?php
   $organizedSessions = [];
@@ -103,8 +75,29 @@
       ];
     }
   }
-  ?>
 
+  $columns = [
+    'name' => 'Année',
+    'status' => 'Statut',
+    'created_at' => 'Créé le'
+  ];
+
+  $rows = array_map(function ($session) {
+    $status = match ($session['is_active']) {
+      0 => 'Inactive',
+      1 => 'En cours',
+      default => 'Statut inconnu',
+    };
+
+    return [
+      'name' => $session['name'],
+      'status' => $status,
+      'created_at' => $session['created_at']
+    ];
+  }, $sessions);
+
+  TableComponent($columns, $rows, 'sessionTableBody');
+  ?>
 
   <div>
     <?php foreach ($organizedSessions as $session): ?>

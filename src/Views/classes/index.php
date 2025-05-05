@@ -1,7 +1,10 @@
 <?php include_once(__DIR__ . '/../partials/HeaderComponent.php'); ?>
+<?php include_once(__DIR__ . '/../partials/TableComponent.php'); ?>
 
 <section class="content">
-  <?= HeaderComponent(
+  <?=
+
+  HeaderComponent(
     $title,
     true,
     [
@@ -13,41 +16,35 @@
       ['label' => 'Année scolaire', 'url' => BASE_URL . '/classes'],
       ['label' => 'Liste des classes']
     ]
-  ) ?>
+  );
 
-  <div class="table-wrapper">
-    <table>
-      <thead>
-        <tr>
-          <th><input type="checkbox"></th>
-          <th>Niveau</th>
-          <th>Nom</th>
-          <th>Créé le</th>
-        </tr>
-      </thead>
-      <tbody id="teacherTableBody">
-        <?php foreach ($classes as $class): ?>
-          <tr>
-            <?php
-            $grade = match ($class['id_grade']) {
-              1 => 'BTS',
-              2 => 'Bachelor 1',
-              3 => 'Bachelor 2',
-              4 => 'Bachelor 3',
-              5 => 'MBA 1',
-              6 => 'MBA 2',
-              default => 'Inconnu',
-            };
-            ?>
-            <td><input type="checkbox"></td>
-            <td><?= htmlspecialchars($grade) ?></td>
-            <td><?= htmlspecialchars($class['name']) ?></td>
-            <td><?= htmlspecialchars($class['created_at']) ?></td>
-          </tr>
-        <?php endforeach; ?>
-      </tbody>
-    </table>
-  </div>
+  $columns = [
+    'grade' => 'Niveau',
+    'name' => 'Nom',
+    'created_at' => 'Créé le'
+  ];
+
+  $rows = [];
+  foreach ($classes as $class) {
+    $grade = match ($class['id_grade']) {
+      1 => 'BTS',
+      2 => 'Bachelor 1',
+      3 => 'Bachelor 2',
+      4 => 'Bachelor 3',
+      5 => 'MBA 1',
+      6 => 'MBA 2',
+      default => 'Inconnu',
+    };
+
+    $rows[] = [
+      'grade' => $grade,
+      'name' => $class['name'],
+      'created_at' => $class['created_at']
+    ];
+  }
+
+  TableComponent($columns, $rows, 'teacherTableBody');
+  ?>
 
 
   <div id="classModal" class="modal">

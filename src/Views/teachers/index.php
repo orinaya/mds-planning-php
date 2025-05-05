@@ -1,4 +1,5 @@
 <?php include_once(__DIR__ . '/../partials/HeaderComponent.php'); ?>
+<?php include_once(__DIR__ . '/../partials/TableComponent.php'); ?>
 
 <section class="content">
   <?= HeaderComponent(
@@ -15,31 +16,25 @@
     ]
   ) ?>
 
-  <div class="table-wrapper">
-    <table>
-      <thead>
-        <tr>
-          <th><input type="checkbox"></th>
-          <th>Nom</th>
-          <th>Prénom</th>
-          <th>Email</th>
-          <th>Description</th>
-          <th>Créé le</th>
-        </tr>
-      </thead>
-      <tbody id="teacherTableBody">
-        <?php foreach ($teachers as $teacher): ?>
-          <tr>
-            <td><input type="checkbox"></td>
-            <td><?= htmlspecialchars($teacher['lastname']) ?></td>
-            <td><?= htmlspecialchars($teacher['firstname']) ?></td>
-            <td><?= htmlspecialchars($teacher['email']) ?></td>
-            <td><?= htmlspecialchars($teacher['description']) ?></td>
-            <td><?= htmlspecialchars($teacher['created_at']) ?></td>
-          </tr>
-        <?php endforeach; ?>
-      </tbody>
-    </table>
-  </div>
+  <?php
+  $columns = [
+    'lastname' => 'Nom',
+    'firstname' => 'Prénom',
+    'email' => 'Email',
+    'description' => 'Description',
+    'created_at' => 'Créé le'
+  ];
+
+  $rows = array_map(function ($teacher) {
+    return [
+      'lastname' => $teacher['lastname'],
+      'firstname' => $teacher['firstname'],
+      'email' => $teacher['email'],
+      'description' => $teacher['description'],
+      'created_at' => $teacher['created_at']
+    ];
+  }, $teachers);
+
+  TableComponent($columns, $rows, 'teacherTableBody'); ?>
 
 </section>
