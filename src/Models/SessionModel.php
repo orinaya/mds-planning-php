@@ -35,11 +35,11 @@ class SessionModel
       session.created_at AS session_created_at,
 
       class.id AS class_id,
-      class.nom AS class_name,
+      class.name AS class_name,
       class.id_grade AS grade_id,
 
       module.id AS module_id,
-      module.nom AS module_name,
+      module.name AS module_name,
       module.duration,
       module.color,
       module.is_option,

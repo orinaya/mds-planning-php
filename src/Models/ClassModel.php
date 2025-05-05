@@ -29,21 +29,23 @@ class ClassModel
   public static function updateClass(int $id, string $name, int $gradeId): bool
   {
     $dbh = DataBase::connectPDO();
-    $query = $dbh->prepare('UPDATE class SET nom = :name, id_grade = :gradeId WHERE id = :id');
+    $query = $dbh->prepare('UPDATE class SET name = :name, id_grade = :gradeId WHERE id = :id');
     $query->bindParam(':id', $id, PDO::PARAM_INT);
     $query->bindParam(':name', $name, PDO::PARAM_STR);
     $query->bindParam(':gradeId', $gradeId, PDO::PARAM_INT);
     return $query->execute();
   }
 
-  public static function createClass(string $name, int $gradeId): bool
+  public static function createClass(string $name, int $gradeId, string $description): bool
   {
     $dbh = DataBase::connectPDO();
-    $query = $dbh->prepare('INSERT INTO class (nom, id_grade) VALUES (:name, :gradeId)');
+    $query = $dbh->prepare('INSERT INTO class (name, id_grade, description) VALUES (:name, :gradeId, :description)');
     $query->bindParam(':name', $name, PDO::PARAM_STR);
     $query->bindParam(':gradeId', $gradeId, PDO::PARAM_INT);
+    $query->bindParam(':description', $description, PDO::PARAM_STR);
     return $query->execute();
   }
+
 
   public static function deleteClass(int $id): bool
   {

@@ -10,7 +10,7 @@ class ModuleModel
   public static function getAllModules(): array
   {
     $dbh = DataBase::connectPDO();
-    $query = $dbh->prepare('SELECT * FROM module WHERE id_session = 1 ORDER BY nom ASC');
+    $query = $dbh->prepare('SELECT * FROM module WHERE id_session = 1 ORDER BY name ASC');
     $query->execute();
     $modules = $query->fetchAll(PDO::FETCH_ASSOC);
     return $modules;
@@ -29,14 +29,14 @@ class ModuleModel
   {
     $dbh = DataBase::connectPDO();
     $query = $dbh->prepare('
-        INSERT INTO modules (id_class, id_session, nom, description, duration, color, is_option, created_at, created_by, updated_at, updated_by)
-        VALUES (:id_class, :id_session, :nom, :description, :duration, :color, :is_option, NOW(), :created_by, NOW(), :updated_by)
+        INSERT INTO modules (id_class, id_session, name, description, duration, color, is_option, created_at, created_by, updated_at, updated_by)
+        VALUES (:id_class, :id_session, :name, :description, :duration, :color, :is_option, NOW(), :created_by, NOW(), :updated_by)
     ');
 
     return $query->execute([
       'id_class' => $data['id_class'],
       'id_session' => $data['id_session'],
-      'nom' => $data['nom'],
+      'name' => $data['name'],
       'description' => $data['description'],
       'duration' => $data['duration'],
       'color' => $data['color'],
@@ -53,7 +53,7 @@ class ModuleModel
         UPDATE modules 
         SET id_class = :id_class, 
             id_session = :id_session, 
-            nom = :nom, 
+            name = :name, 
             description = :description, 
             duration = :duration, 
             color = :color, 
@@ -67,7 +67,7 @@ class ModuleModel
       'id' => $id,
       'id_class' => $data['id_class'],
       'id_session' => $data['id_session'],
-      'nom' => $data['nom'],
+      'name' => $data['name'],
       'description' => $data['description'],
       'duration' => $data['duration'],
       'color' => $data['color'],
@@ -88,8 +88,8 @@ class ModuleModel
     $dbh = DataBase::connectPDO();
     $query = $dbh->prepare('
         SELECT * FROM modules 
-        WHERE nom LIKE :term OR description LIKE :term
-        ORDER BY nom
+        WHERE name LIKE :term OR description LIKE :term
+        ORDER BY name
     ');
     $query->execute(['term' => "%$term%"]);
     return $query->fetchAll(PDO::FETCH_ASSOC);
