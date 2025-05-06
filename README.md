@@ -12,23 +12,23 @@ Le projet utilise Composer pour la gestion des dépendances PHP et npm pour les 
 5. [Structure du projet](#5-structure-du-projet)
 6. [Utilisation](#6-utilisation)
 
-## Fonctionnalités
+## 1. Fonctionnalités
 
 - Gestion des plannings (affichage desc cours, des modules)
 - Affichage des formateurs
 - Affichage des classes
 - Affichage des années
 
-## Architecture
+## 2. Architecture
 Le projet a une structure MVC avec séparation claire entre le code source (`src/`), les fichiers publics (`public/`), la configuration (`config/`) et la base de données (`database/`).
 
-## Prérequis
+## 3. Prérequis
 
 - PHP 7.4 ou supérieur
 - Composer
 - Node.js et npm
 
-## Installer le projet
+## 4. Installer le projet
 
 📂 Clônez le dépôt
 ```bash
@@ -54,7 +54,7 @@ Compiler les fichiers Sass :
 npm run build:css
 ```
 
-## Structure du projet
+## 5. Structure du projet
 
     config/ : fichiers de configuration.
 
@@ -70,6 +70,6 @@ npm run build:css
 
     package.json : gestion des dépendances JavaScript.
 
-## Utilisation
+## 6. Utilisation
 
 Après l'installation, configurez votre serveur web pour pointer vers le répertoire `public/` comme racine. Assurez-vous que les fichiers `.htaccess` sont pris en charge si vous utilisez Apache.
