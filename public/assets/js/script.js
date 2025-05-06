@@ -1,4 +1,4 @@
-//  TOGGLE SIDEBAR
+// SIDEBAR + ACCORDION
 function toggleAccordion(id) {
   const submenu = document.getElementById(id);
   if (!submenu) return;
@@ -6,9 +6,7 @@ function toggleAccordion(id) {
   submenu.classList.toggle("hidden");
 
   const button = submenu.previousElementSibling;
-  if (button) {
-    button.classList.toggle("active");
-  }
+  if (button) button.classList.toggle("active");
 }
 
 function toggleSidebar() {
@@ -25,12 +23,7 @@ function toggleSidebar() {
   }
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-  const toggleBtn = document.getElementById("toggle-sidebar");
-  toggleBtn?.addEventListener("click", toggleSidebar);
-});
-
-// DRAG AND DROP
+// DRAG & DROP
 function allowDrop(ev) {
   ev.preventDefault();
 }
@@ -41,57 +34,51 @@ function drag(ev) {
 
 function drop(ev) {
   ev.preventDefault();
-  var moduleId = ev.dataTransfer.getData("moduleId");
-  var moduleElement = document.getElementById(moduleId);
-
-  var dropTarget = ev.target;
+  const moduleId = ev.dataTransfer.getData("moduleId");
+  const moduleElement = document.getElementById(moduleId);
+  const dropTarget = ev.target;
 
   if (dropTarget.classList.contains("calendar-half")) {
-    var newModule = document.createElement("div");
+    const newModule = document.createElement("div");
     newModule.classList.add("dropped-module");
     newModule.innerText = moduleElement.innerText;
-
     newModule.setAttribute("data-module-id", moduleId);
-
     dropTarget.appendChild(newModule);
   }
 }
 
-document.querySelectorAll(".module").forEach((mod) => {
-  mod.addEventListener("dragstart", (e) => {
-    e.dataTransfer.setData("module-id", mod.dataset.moduleId);
+document.addEventListener("DOMContentLoaded", () => {
+  // Toggle sidebar
+  const toggleBtn = document.getElementById("toggle-sidebar");
+  toggleBtn?.addEventListener("click", toggleSidebar);
+
+  // Accordion toggle
+  document.querySelectorAll(".accordion-toggle").forEach((toggle) => {
+    toggle.addEventListener("click", () => {
+      toggle.nextElementSibling.classList.toggle("show");
+    });
   });
-});
 
-document.querySelectorAll(".morning, .afternoon").forEach((zone) => {
-  zone.addEventListener("dragover", (e) => e.preventDefault());
-  zone.addEventListener("drop", (e) => {
-    e.preventDefault();
-    const moduleId = e.dataTransfer.getData("module-id");
-    alert(`Ajout module ID : ${moduleId}`);
+  // Drag modules depuis la liste
+  document.querySelectorAll(".module").forEach((mod) => {
+    mod.addEventListener("dragstart", (e) => {
+      e.dataTransfer.setData("module-id", mod.dataset.moduleId || mod.dataset.id);
+    });
   });
-});
 
-// Recherche
-document.getElementById("searchInput").addEventListener("input", function () {
-  const filter = this.value.toLowerCase();
-  const rows = document.querySelectorAll("#teacherTableBody tr");
-
-  rows.forEach((row) => {
-    const text = row.textContent.toLowerCase();
-    row.style.display = text.includes(filter) ? "" : "none";
+  // Drop zones calendrier
+  document.querySelectorAll(".morning, .afternoon").forEach((zone) => {
+    zone.addEventListener("dragover", (e) => e.preventDefault());
+    zone.addEventListener("drop", (e) => {
+      e.preventDefault();
+      const moduleId = e.dataTransfer.getData("module-id");
+      alert(`Ajout module ID : ${moduleId}`);
+    });
   });
-});
 
-document.addEventListener("DOMContentLoaded", function () {
+  // DRAG depuis liste vers calendrier
   const modules = document.querySelectorAll(".module");
   const calendar = document.getElementById("calendar");
-  const searchInput = document.getElementById("searchInput");
-  const addModuleBtn = document.getElementById("addModuleBtn");
-  const modal = document.getElementById("moduleModal");
-  const closeBtn = document.querySelector(".close-btn");
-  const cancelBtn = document.getElementById("cancelBtn");
-  const moduleForm = document.getElementById("moduleForm");
 
   modules.forEach((module) => {
     module.addEventListener("dragstart", handleDragStart);
@@ -100,114 +87,79 @@ document.addEventListener("DOMContentLoaded", function () {
   function handleDragStart(e) {
     e.dataTransfer.setData("text/plain", e.target.dataset.id);
     e.target.classList.add("dragging");
-    setTimeout(() => {
-      e.target.classList.remove("dragging");
-    }, 0);
+    setTimeout(() => e.target.classList.remove("dragging"), 0);
   }
 
-  calendar.addEventListener("dragover", (e) => {
+  calendar?.addEventListener("dragover", (e) => {
     e.preventDefault();
     calendar.classList.add("drag-over");
   });
 
-  calendar.addEventListener("dragleave", () => {
+  calendar?.addEventListener("dragleave", () => {
     calendar.classList.remove("drag-over");
   });
 
-  calendar.addEventListener("drop", (e) => {
-    e.preventDefault();
-    calendar.classList.remove("drag-over");
-    const moduleId = e.dataTransfer.getData("text/plain");
-    const originalModule = document.querySelector(`.module[data-id="${moduleId}"]`);
-
-    if (originalModule) {
-      const clone = originalModule.cloneNode(true);
-      clone.classList.add("calendar-module");
-
-      const removeBtn = document.createElement("button");
-      removeBtn.classList.add("remove-btn");
-      removeBtn.innerHTML = "&times;";
-      removeBtn.addEventListener("click", function () {
-        clone.remove();
-      });
-
-      clone.appendChild(removeBtn);
-      calendar.appendChild(clone);
-    }
-  });
-
-  searchInput.addEventListener("input", function () {
+  // Recherche modules
+  const searchInput = document.getElementById("searchInput");
+  searchInput?.addEventListener("input", function () {
     const searchTerm = this.value.toLowerCase();
     modules.forEach((module) => {
       const title = module.querySelector(".module-title").textContent.toLowerCase();
-      if (title.includes(searchTerm)) {
-        module.style.display = "block";
-      } else {
-        module.style.display = "none";
-      }
+      module.style.display = title.includes(searchTerm) ? "block" : "none";
     });
   });
 
-  addModuleBtn.addEventListener("click", function () {
-    modal.style.display = "flex";
+  // MODAL MODULE
+  const addModuleBtn = document.getElementById("addModuleBtn");
+  const modal = document.getElementById("moduleModal");
+  const closeBtn = document.querySelector(".close-btn");
+  const cancelBtn = document.getElementById("cancelBtn");
+  const moduleForm = document.getElementById("moduleForm");
+
+  addModuleBtn?.addEventListener("click", () => (modal.style.display = "flex"));
+  closeBtn?.addEventListener("click", () => (modal.style.display = "none"));
+  cancelBtn?.addEventListener("click", () => (modal.style.display = "none"));
+
+  window.addEventListener("click", (e) => {
+    if (e.target === modal) modal.style.display = "none";
   });
 
-  closeBtn.addEventListener("click", function () {
-    modal.style.display = "none";
-  });
-
-  cancelBtn.addEventListener("click", function () {
-    modal.style.display = "none";
-  });
-
-  window.addEventListener("click", function (e) {
-    if (e.target === modal) {
-      modal.style.display = "none";
-    }
-  });
-
-  moduleForm.addEventListener("submit", function (e) {
+  moduleForm?.addEventListener("submit", function (e) {
     e.preventDefault();
-
     const name = document.getElementById("moduleName").value;
     const color = document.getElementById("moduleColor").value;
     const isOption = document.getElementById("moduleOption").checked;
-
     const id = Date.now();
 
-    const moduleHTML = `
-      <li class="module" id="module-${id}" draggable="true" ondragstart="drag(event)" data-id="${id}">
-        <div class="color-${color}">
-          <div class="module-head">
-            <span class="module-title">${name}</span>
-            ${isOption ? '<span class="module-option">Option</span>' : ""}
-            <span class="module-id">ID: ${id}</span>
-          </div>
-          <div class="module-body">
-            <div class="module-duration">${id}h</div>
-            <div>Delai: 2</div>
-          </div>
+    const moduleHTML = `<li class="module" style="border: 2px solid ${color}" draggable="true" data-id="${id}">
+      <div style="background-color: ${color}; filter: brightness(1.3); padding: 10px; border-radius: 8px;">
+        <div class="module-head">
+          <span class="module-title">${name}</span>
+          ${isOption ? '<span class="module-option">Option</span>' : ""}
+          <span class="module-id">ID: ${id}</span>
         </div>
-      </li>
-    `;
+        <div class="module-body">
+          <div class="module-duration"><span class="icon-clock"></span>${id}h</div>
+          <div>Delta: 2</div>
+        </div>
+      </div></li>`;
 
     document.getElementById("modules").insertAdjacentHTML("beforeend", moduleHTML);
-
-    const newModule = document.querySelector(`.module[data-id="${id}"]`);
-    newModule.addEventListener("dragstart", handleDragStart);
+    document.querySelector(`.module[data-id="${id}"]`).addEventListener("dragstart", handleDragStart);
 
     modal.style.display = "none";
     moduleForm.reset();
   });
 });
 
+// MULTISELECT CLASSES
 const input = document.getElementById("classInput");
 const suggestions = document.getElementById("suggestions");
 const multiSelect = document.getElementById("multiSelect");
 const selectedValues = new Set();
 const hiddenInput = document.getElementById("selectedClasses");
 
-input.addEventListener("input", () => {
+input?.addEventListener("input", () => {
   const value = input.value.toLowerCase();
   suggestions.innerHTML = "";
   const filtered = classes.filter((c) => c.toLowerCase().includes(value) && !selectedValues.has(c));
@@ -251,12 +203,57 @@ document.addEventListener("click", (e) => {
   }
 });
 
+// MODAL
 document.addEventListener("DOMContentLoaded", () => {
-  const toggles = document.querySelectorAll(".accordion-toggle");
-  toggles.forEach((toggle) => {
+  const modal = document.getElementById("genericModal");
+  const modalTitle = document.getElementById("genericModalTitle");
+  const modalIcon = document.getElementById("genericModalIcon");
+  const modalBody = document.getElementById("genericModalBody");
+  const closeBtn = document.getElementById("genericModalClose");
+  const cancelBtn = document.getElementById("genericModalCancel");
+  const form = document.getElementById("genericModalForm");
+
+  let onSubmitCallback = null;
+
+  window.openGenericModal = function ({ title, icon, bodyHtml, onSubmit }) {
+    modalTitle.textContent = title;
+    modalIcon.className = `icon ${icon}`;
+    modalBody.innerHTML = bodyHtml;
+    onSubmitCallback = onSubmit;
+    modal.style.display = "flex";
+  };
+
+  function closeModal() {
+    modal.style.display = "none";
+    modalBody.innerHTML = "";
+    form.reset();
+    onSubmitCallback = null;
+  }
+
+  closeBtn?.addEventListener("click", closeModal);
+  cancelBtn?.addEventListener("click", (e) => {
+    e.preventDefault();
+    closeModal();
+  });
+
+  window.addEventListener("click", (e) => {
+    if (e.target === modal) closeModal();
+  });
+
+  form?.addEventListener("submit", (e) => {
+    e.preventDefault();
+    if (onSubmitCallback && typeof onSubmitCallback === "function") {
+      onSubmitCallback(new FormData(form));
+    }
+    closeModal();
+  });
+});
+
+//
+document.addEventListener("DOMContentLoaded", () => {
+  document.querySelectorAll(".session-accordion-toggle").forEach((toggle) => {
     toggle.addEventListener("click", () => {
-      const content = toggle.nextElementSibling;
-      content.classList.toggle("show");
+      toggle.nextElementSibling.classList.toggle("show");
     });
   });
 });

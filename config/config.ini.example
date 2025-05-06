@@ -1,4 +1,4 @@
-DB_HOST = 'host'
-DB_NAME = 'db-name'
-DB_USERNAME = 'db-username'
-DB_PASSWORD = 'db-password'
+DB_HOST = host
+DB_NAME = db-name
+DB_USERNAME = db-username
+DB_PASSWORD = db-password

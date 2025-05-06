@@ -2,6 +2,7 @@
 include_once(__DIR__ . '/../partials/LinkParticle.php');
 include_once(__DIR__ . '/../partials/ButtonParticle.php');
 include_once(__DIR__ . '/../partials/HeaderComponent.php');
+include_once(__DIR__ . '/../partials/InputParticle.php');
 
 // Définition de la période scolaire
 $startDate = strtotime('2024-09-02'); // début année 
@@ -42,6 +43,16 @@ if (!empty($calendars)) {
       }
     }
   }
+}
+
+function getModuleColor($modules, $moduleId)
+{
+  foreach ($modules as $mod) {
+    if ($mod['id'] == $moduleId) {
+      return $mod['color'];
+    }
+  }
+  return '#ccc';
 }
 ?>
 
@@ -95,12 +106,16 @@ if (!empty($calendars)) {
                     ondrop="drop(event)"
                     ondragover="allowDrop(event)">
                     <?php foreach ($dayData['morning'] as $lesson): ?>
-                      <div
-                        class="dropped-module"
-                        data-module-id="<?= $lesson['id'] ?>"
-                        draggable="true"
-                        ondragstart="drag(event)">
-                        <?= htmlspecialchars($lesson['description']) ?>
+                      <?php $color = getModuleColor($modules, $lesson['id']); ?>
+                      <div style="border: 2px solid <?= htmlspecialchars($color) ?>; border-radius: 8px; margin: 5px 0;">
+                        <div
+                          class="dropped-module"
+                          data-module-id="<?= $lesson['id'] ?>"
+                          draggable="true"
+                          ondragstart="drag(event)"
+                          style="border: 2px solid <?= htmlspecialchars($color) ?>; background-color: <?= htmlspecialchars($color) ?>; filter: brightness(1.3); border-radius: 8px; padding: 8px;">
+                          <?= htmlspecialchars($lesson['description']) ?>
+                        </div>
                       </div>
                     <?php endforeach; ?>
                   </div>
@@ -111,12 +126,16 @@ if (!empty($calendars)) {
                     ondrop="drop(event)"
                     ondragover="allowDrop(event)">
                     <?php foreach ($dayData['afternoon'] as $lesson): ?>
-                      <div
-                        class="dropped-module"
-                        data-module-id="<?= $lesson['id'] ?>"
-                        draggable="true"
-                        ondragstart="drag(event)">
-                        <?= htmlspecialchars($lesson['description']) ?>
+                      <?php $color = getModuleColor($modules, $lesson['id']); ?>
+                      <div style="border: 2px solid <?= htmlspecialchars($color) ?>; border-radius: 8px; margin: 5px 0;">
+                        <div
+                          class="dropped-module"
+                          data-module-id="<?= $lesson['id'] ?>"
+                          draggable="true"
+                          ondragstart="drag(event)"
+                          style="border: 2px solid <?= htmlspecialchars($color) ?>; background-color: <?= htmlspecialchars($color) ?>; filter: brightness(1.3); border-radius: 8px; padding: 8px;">
+                          <?= htmlspecialchars($lesson['description']) ?>
+                        </div>
                       </div>
                     <?php endforeach; ?>
                   </div>
@@ -147,11 +166,12 @@ if (!empty($calendars)) {
           <?php foreach ($modules as $module): ?>
             <li
               class="module"
-              id="module-<?= $module['id'] ?>"
+              style="border: 2px solid <?= htmlspecialchars($module['color']) ?>"
+              id=" module-<?= $module['id'] ?>"
               draggable="true"
               ondragstart="drag(event)"
               data-id="<?= $module['id'] ?>">
-              <div class="color-primary">
+              <div style="background-color: <?= htmlspecialchars($module['color']) ?>; filter: brightness(1.3); padding: 10px; border-radius: 8px;">
                 <div class="module-head">
                   <span class="module-title">
                     <?= htmlspecialchars($module['name']) ?>
@@ -162,6 +182,7 @@ if (!empty($calendars)) {
                 </div>
                 <div class="module-body">
                   <div class="module-duration">
+                    <span class="icon-clock"></span>
                     <?= $module['duration'] ?>h
                   </div>
                   <div>Delta: 2</div>
@@ -182,60 +203,50 @@ if (!empty($calendars)) {
         </div>
 
         <form id="moduleForm">
-          <!-- Sélecteur de classe -->
-          <div class="form-group">
-            <label for="classSelect">Classe(s)</label>
-            <div id="classSelector" class="multi-select-container">
-              <div id="multiSelect" class="multi-select"></div>
-              <input
-                type="text"
-                id="classInput"
-                class="form-control"
-                placeholder="Rechercher une classe..."
-                autocomplete="off" />
-              <ul id="suggestions" class="suggestions-list"></ul>
-              <input type="hidden" name="classes[]" id="selectedClasses" />
-            </div>
-          </div>
+          <?php
+          InputParticle([
+            'type' => 'multi-select',
+            'label' => 'Classe(s)',
+            'id' => 'classSelect',
+            'placeholder' => 'Rechercher une classe...'
+          ]);
 
-          <!-- Sélecteur de module -->
-          <div class="form-group">
-            <label for="moduleName">Nom du module</label>
-            <input
-              type="text"
-              id="moduleName"
-              class="form-control"
-              required>
-          </div>
+          InputParticle([
+            'type' => 'text',
+            'label' => 'Nom du module',
+            'id' => 'moduleName',
+            'required' => true
+          ]);
 
-          <!-- Description -->
-          <div class="form-group">
-            <label for="moduleDescription">Description</label>
-            <textarea id="moduleDescription" class="form-control" rows="3"></textarea>
-          </div>
+          InputParticle([
+            'type' => 'textarea',
+            'label' => 'Description',
+            'id' => 'moduleDescription',
+            'rows' => 3
+          ]);
 
-          <!-- Durée -->
-          <div class="form-group">
-            <label for="moduleDuration">Durée (heures)</label>
-            <input type="number" id="moduleDuration" class="form-control" min="1" required>
-          </div>
+          InputParticle([
+            'type' => 'number',
+            'label' => 'Durée',
+            'id' => 'moduleDuration',
+            'min' => 1,
+            'required' => true
+          ]);
 
-          <!-- Couleur -->
-          <div class="form-group">
-            <label for="moduleColor">Couleur</label>
-            <input
-              type="color"
-              id="moduleColor"
-              value="#007bff">
-          </div>
+          InputParticle([
+            'type' => 'color',
+            'label' => 'Couleur',
+            'id' => 'moduleColor',
+            'value' => '#007bff'
+          ]);
 
-          <!-- Optionnel -->
-          <div class=" form-group">
-            <label>
-              <input type="checkbox" id="moduleOption">
-              Module optionnel
-            </label>
-          </div>
+          InputParticle([
+            'type' => 'checkbox',
+            'label' => 'Module optionnel',
+            'id' => 'moduleOption'
+          ]);
+
+          ?>
 
           <div class="form-actions">
             <?php ButtonParticle('Annuler', 'danger', 'trash-bin', 'cancelBtn'); ?>

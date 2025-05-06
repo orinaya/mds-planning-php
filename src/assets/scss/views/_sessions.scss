@@ -1,22 +1,61 @@
-.accordion-toggle {
-  cursor: pointer;
-  background-color: #f1f1f1;
-  padding: 10px;
+@use "../theme/colors" as *;
+@use "../mixins" as *;
+@use "../theme/variables" as *;
+
+.session-accordion-toggle {
+  @include flex(row, space-between, center);
+  @include color(primary, 900, primary, 400);
+  padding: 14px 17px;
   border: none;
-  width: 100%;
-  text-align: left;
+  border-radius: $border-radius-sm;
   font-weight: bold;
-  transition: 0.3s;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  width: 100%;
+
+  &:hover {
+    @include color(primary, 800, primary, 300);
+  }
 }
 
 .accordion-content {
   display: none;
   padding: 10px 20px;
-  border-left: 2px solid #ccc;
-  margin-bottom: 10px;
   background-color: #fafafa;
+  border-left: 5px solid #ccc;
+  margin-bottom: 10px;
+
+  &.show {
+    display: block;
+  }
+
+  p {
+    margin: 0 0 10px;
+    font-weight: bold;
+  }
+
+  ul {
+    list-style-type: none;
+    padding-left: 0;
+
+    li {
+      margin: 5px 0;
+    }
+  }
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .accordion-content.show {
-  display: block;
+  animation: slideIn 0.3s ease-out;
 }

@@ -83,7 +83,7 @@
   ];
 
   $rows = array_map(function ($session) {
-    $status = match ($session['is_active']) {
+    $status = match ($session['is_active'] ?? null) {
       0 => 'Inactive',
       1 => 'En cours',
       default => 'Statut inconnu',
@@ -116,12 +116,12 @@
             default => 'Inconnu',
           };
           ?>
-          <button class="accordion-toggle"><?= $grade ?> - <?= htmlspecialchars($class['name']) ?></button>
+          <button class="session-accordion-toggle"><?= $grade ?> - <?= htmlspecialchars($class['name']) ?></button>
           <div class="accordion-content">
 
             <?php foreach ($class['modules'] as $module): ?>
-              <button class="accordion-toggle">
-                Module : <?= htmlspecialchars($module['name']) ?><?= $module['is_option'] ? ' (Option)' : '' ?>
+              <button class="session-accordion-toggle">
+                <?= htmlspecialchars($module['name']) ?><?= $module['is_option'] ? ' (Option)' : '' ?>
               </button>
               <div class="accordion-content" style="border-left: 5px solid <?= htmlspecialchars($module['color'] ?? '#ccc') ?>;">
 
@@ -139,7 +139,7 @@
                   <ul>
                     <?php foreach ($module['lessons'] as $lesson): ?>
                       <li>
-                        <?= htmlspecialchars($lesson['description']) ?> —
+                        <?= htmlspecialchars($lesson['description']) ?> -
                         du <?= htmlspecialchars($lesson['date_start']) ?> au <?= htmlspecialchars($lesson['date_end']) ?>
                         <?= $lesson['is_hp'] ? '(HP)' : '' ?>
                       </li>
@@ -155,40 +155,5 @@
       </div>
     <?php endforeach; ?>
   </div>
-  <style>
-    .accordion-toggle {
-      cursor: pointer;
-      background-color: #f1f1f1;
-      padding: 10px;
-      border: none;
-      width: 100%;
-      text-align: left;
-      font-weight: bold;
-      transition: 0.3s;
-    }
 
-    .accordion-content {
-      display: none;
-      padding: 10px 20px;
-      border-left: 2px solid #ccc;
-      margin-bottom: 10px;
-      background-color: #fafafa;
-    }
-
-    .accordion-content.show {
-      display: block;
-    }
-  </style>
-
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const toggles = document.querySelectorAll('.accordion-toggle');
-      toggles.forEach(toggle => {
-        toggle.addEventListener('click', () => {
-          const content = toggle.nextElementSibling;
-          content.classList.toggle('show');
-        });
-      });
-    });
-  </script>
 </section>
