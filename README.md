@@ -6,7 +6,7 @@ Le projet utilise Composer pour la gestion des dépendances PHP et npm pour les 
 ## Table des matières
 
 1. [Fonctionnalités](#1-fonctionnalités)
-2. [Architecture](#2-architectureonnalités)
+2. [Architecture](#2-architecture)
 3. [Prérequis](#3-prérequis)
 4. [Installer le projet](#4-installer-le-projet)
 5. [Structure du projet](#5-structure-du-projet)
